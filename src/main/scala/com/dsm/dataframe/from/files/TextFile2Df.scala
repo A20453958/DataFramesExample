@@ -1,6 +1,7 @@
 package com.dsm.dataframe.from.files
 
 import com.dsm.utils.Constants
+import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.{SaveMode, SparkSession}
 import org.apache.spark.sql.types._
 
@@ -11,9 +12,10 @@ object TextFile2Df {
       .appName("Dataframe Example")
       .getOrCreate()
     spark.sparkContext.setLogLevel(Constants.ERROR)
-
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", Constants.ACCESS_KEY)
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", Constants.SECRET_ACCESS_KEY)
+    val rootConfig = ConfigFactory.load("application.conf").getConfig("conf")
+    val s3Config = rootConfig.getConfig("s3_conf")
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", s3Config.getString("access_key"))
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", s3Config.getString("secret_access_key"))
 
     println("\nCreating dataframe from CSV file using 'SparkSession.read.format()',")
     val finSchema = new StructType()
