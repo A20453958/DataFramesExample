@@ -12,8 +12,8 @@ object TextFile2Df {
       .getOrCreate()
     spark.sparkContext.setLogLevel(Constants.ERROR)
 
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "AKIAYRTE73X6SDU75DYH")
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", "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")
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", Constants.ACCESS_KEY)
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", Constants.SECRET_ACCESS_KEY)
 
     println("\nCreating dataframe from CSV file using 'SparkSession.read.format()',")
     val finSchema = new StructType()
