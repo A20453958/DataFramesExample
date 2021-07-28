@@ -16,11 +16,11 @@ object ScholashipRecipientFilterJoin {
     val spark = SparkSession.builder.master("local[*]").appName("Dataframe Example").getOrCreate()
     spark.sparkContext.setLogLevel(Constants.ERROR)
 
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "AKIAYRTE73X6SDU75DYH" )
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", "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")
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId",Constants.ACCESS_KEY )
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey",Constants.SECRET_ACCESS_KEY)
 
-    val demographicsRdd = spark.sparkContext.textFile(s"s3n://sridattu-bigdata/demographic.csv")
-    val financesRdd = spark.sparkContext.textFile(s"s3n://sridattu-bigdata/finances.csv")
+    val demographicsRdd = spark.sparkContext.textFile(s"s3n://${Constants.S3_BUCKET}/demographic.csv")
+    val financesRdd = spark.sparkContext.textFile(s"s3n://${Constants.S3_BUCKET}/finances.csv")
 
     val demographicsPairedRdd = demographicsRdd
       .map(record => record.split(","))
