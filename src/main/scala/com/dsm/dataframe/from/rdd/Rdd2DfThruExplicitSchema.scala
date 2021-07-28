@@ -13,13 +13,13 @@ object Rdd2DfThruExplicitSchema {
       .getOrCreate()
     spark.sparkContext.setLogLevel(Constants.ERROR)
 
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "AKIAYRTE73X6SDU75DYH")
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", "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")
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", Constants.ACCESS_KEY)
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", Constants.SECRET_ACCESS_KEY)
 
     println("\nConvert RDD to Dataframe using SparkSession.createDataframe(),")
     // Creating RDD of Row
     val txnFctRdd = spark.sparkContext
-      .textFile("s3n://" + "sridattu-bigdata" + "/txn_fct.csv")
+      .textFile("s3n://" + Constants.S3_BUCKET + "/txn_fct.csv")
       .filter(record => !record.contains("txn_id"))
       .map(record => record.split("\\|"))
       .map(record => Row(record(0).toLong,
