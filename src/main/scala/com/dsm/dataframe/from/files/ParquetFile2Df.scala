@@ -20,7 +20,7 @@ object ParquetFile2Df {
 
     println("\nCreating dataframe from parquet file using 'SparkSession.read.parquet()',")
     val nycOmoDf = spark.read
-      .parquet("s3n://" + "sridattu-bigdata" + "/NYC_OMO")
+      .parquet("s3n://" + Constants.S3_BUCKET + "/NYC_OMO")
       .repartition(5)
 
     println("# of records = " + nycOmoDf.count())
@@ -67,7 +67,7 @@ object ParquetFile2Df {
       .repartition(10)
       .write
       .mode(SaveMode.Overwrite)
-      .parquet("s3n://" + "sridattu-bigdata" + "/nyc_omo_data")
+      .parquet("s3n://" + Constants.S3_BUCKET + "/nyc_omo_data")
 
     spark.close()
   }
