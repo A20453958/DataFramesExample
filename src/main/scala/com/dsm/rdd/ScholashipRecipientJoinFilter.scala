@@ -19,12 +19,12 @@ object ScholashipRecipientJoinFilter {
       .getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
 
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", "AKIAYRTE73X6SDU75DYH")
-    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", "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")
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId",Constants.ACCESS_KEY)
+    spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsSecretAccessKey", Constants.SECRET_ACCESS_KEY)
 
-    val demographicsRDD = spark.sparkContext.textFile(s"s3n://sridattu-bigdata/demographic.csv")
-    val financesRDD = spark.sparkContext.textFile(s"s3n://sridattu-bigdata/finances.csv")
-    val coursesRDD = spark.sparkContext.textFile(s"s3n://sridattu-bigdata/course.csv")
+    val demographicsRDD = spark.sparkContext.textFile(s"s3n://${Constants.S3_BUCKET}/demographic.csv")
+    val financesRDD = spark.sparkContext.textFile(s"s3n://${Constants.S3_BUCKET}/finances.csv")
+    val coursesRDD = spark.sparkContext.textFile(s"s3n://${Constants.S3_BUCKET}/course.csv")
 
     println("# of records = " + demographicsRDD.count())
 
