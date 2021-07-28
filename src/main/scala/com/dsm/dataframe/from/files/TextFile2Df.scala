@@ -27,7 +27,7 @@ object TextFile2Df {
         .option("delimiter", ",")
         .format("csv")
         .schema(finSchema)
-        .load("s3n://" + "sridattu-bigdata" + "/finances.csv")
+        .load("s3n://" + Constants.S3_BUCKET + "/finances.csv")
 
     finDf.printSchema()
     finDf.show()
@@ -38,7 +38,7 @@ object TextFile2Df {
       .option("header", "false")
       .option("delimiter", ",")
       .option("inferSchema", "true")
-      .csv("s3n://" + "sridattu-bigdata" + "/finances.csv")
+      .csv("s3n://" + Constants.S3_BUCKET + "/finances.csv")
       .toDF("id", "has_debt", "has_financial_dependents", "has_student_loans", "income")
 
     println("# of partitions = " + finDf.rdd.getNumPartitions)
@@ -51,7 +51,7 @@ object TextFile2Df {
       .mode(SaveMode.Overwrite)
       .option("header", "true")
       .option("delimiter", "~")
-      .csv("s3n://" + "sridattu-bigdata" + "/fin")
+      .csv("s3n://" + Constants.S3_BUCKET + "/fin")
 
     spark.close()
   }
