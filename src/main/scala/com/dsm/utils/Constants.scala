@@ -1,11 +1,14 @@
 package com.dsm.utils
 
-import com.typesafe.config.Config
+import com.typesafe.config.{Config, ConfigFactory}
 
 object Constants {
-  val ACCESS_KEY = "AKIAYRTE73X6SDU75DYH"
-  val SECRET_ACCESS_KEY = "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"
-  val S3_BUCKET = "sridattu-bigdata"
+  val rootConfig = ConfigFactory.load("application.conf").getConfig("conf")
+  val s3Config = rootConfig.getConfig("s3_conf")
+  
+  val ACCESS_KEY = s3Config.getString("access_key")
+  val SECRET_ACCESS_KEY = s3Config.getString("secret_access_key")
+  val S3_BUCKET = s3Config.getString("s3_bucket")
   val ERROR = "ERROR"
 
   def getRedshiftJdbcUrl(redshiftConfig: Config): String = {
